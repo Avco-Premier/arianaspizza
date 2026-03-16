@@ -57,339 +57,1346 @@
     </script>
 
     <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #fafafa;
+            --cream: #f5f2ed;
+            --red: #e63527;
+            --red-dark: #c42a1e;
+            --green: #1a5c38;
+            --gold: #d4a853;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Helvetica Neue', 'Arial', sans-serif;
-            font-weight: 300;
-            background-color: #111111;
-            color: #e0e0e0;
-            line-height: 1.8;
-            letter-spacing: 0.5px;
+        html {
+            scroll-behavior: smooth;
         }
 
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--black);
+            line-height: 1.6;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        /* Utility */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 clamp(20px, 5vw, 80px);
+        }
+
+        /* Header */
         header {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
-            padding: 3rem 1rem;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 51, 51, 0.3);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            background: var(--black);
+            padding: 15px 0;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
-            font-size: 4rem;
-            font-weight: 200;
-            color: #ff4444;
-            text-shadow: 
-                0 0 10px rgba(255, 68, 68, 0.8),
-                0 0 20px rgba(255, 68, 68, 0.6),
-                0 0 30px rgba(255, 68, 68, 0.4),
-                0 0 40px rgba(255, 68, 68, 0.2);
-            margin-bottom: 0.5rem;
-            letter-spacing: 3px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
         }
 
-        .tagline {
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            color: var(--white);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover .logo-icon {
+            transform: rotate(-10deg) scale(1.05);
+        }
+
+        .logo-text {
+            font-family: 'Bebas Neue', sans-serif;
             font-size: 1.4rem;
-            color: #b0b0b0;
-            font-style: italic;
-            font-weight: 300;
+            letter-spacing: 2px;
+            color: var(--white);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        nav a {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: var(--white);
+            text-decoration: none;
+            text-transform: uppercase;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--red);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--red);
+            color: var(--white) !important;
+            padding: 12px 24px;
+            font-weight: 500;
+        }
+
+        .nav-cta::after {
+            display: none;
+        }
+
+        .nav-cta:hover {
+            background: var(--red-dark);
+        }
+
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .mobile-toggle span {
+            width: 28px;
+            height: 2px;
+            background: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            background: var(--black);
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 40px,
+                    var(--white) 40px,
+                    var(--white) 41px
+                );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-text {
+            color: var(--white);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--red);
+            color: var(--white);
+            padding: 8px 16px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--white);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(4rem, 10vw, 8rem);
+            line-height: 0.9;
+            letter-spacing: -2px;
+            margin-bottom: 30px;
+        }
+
+        .hero-title span {
+            display: block;
+        }
+
+        .hero-title .outline {
+            -webkit-text-stroke: 2px var(--white);
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 400px;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 36px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--red-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            aspect-ratio: 4/5;
+            overflow: hidden;
+        }
+
+        .hero-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-image-frame {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: -20px;
+            bottom: -20px;
+            border: 3px solid var(--red);
+            z-index: -1;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            color: var(--red);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        /* Marquee */
+        .marquee-section {
+            background: var(--red);
+            padding: 15px 0;
+            overflow: hidden;
+        }
+
+        .marquee-track {
+            display: flex;
+            animation: marquee 30s linear infinite;
+        }
+
+        .marquee-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            flex-shrink: 0;
+            padding-right: 60px;
+        }
+
+        .marquee-item {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            color: var(--white);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .marquee-item::after {
+            content: '★';
+            font-size: 0.8rem;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* About Section */
+        .about {
+            padding: 120px 0;
+            background: var(--cream);
+            position: relative;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image-main {
+            aspect-ratio: 1;
+            overflow: hidden;
+        }
+
+        .about-image-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-image-accent {
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            width: 200px;
+            height: 200px;
+            background: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: var(--white);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .about-image-accent .year {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            line-height: 1;
+        }
+
+        .about-image-accent .text {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 5px;
+        }
+
+        .about-content {
+            padding-left: 40px;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .section-label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 30px;
+            height: 2px;
+            background: var(--red);
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1;
+            margin-bottom: 30px;
+            color: var(--black);
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .about-text strong {
+            color: var(--black);
+            font-weight: 500;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+            padding-top: 50px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .feature-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
             letter-spacing: 1px;
         }
 
-        .hero {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 1rem;
+        .feature-text {
+            font-size: 0.85rem;
+            color: #777;
         }
 
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #ff4444 0%, #ff2222 100%);
-            color: white;
-            padding: 1.3rem 3.5rem;
-            font-size: 1.5rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            text-decoration: none;
-            border-radius: 50px;
-            box-shadow: 
-                0 0 15px rgba(255, 68, 68, 0.6),
-                0 0 30px rgba(255, 68, 68, 0.4),
-                0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            margin: 2rem 0;
+        /* Gallery */
+        .gallery {
+            background: var(--black);
+            padding: 100px 0;
         }
 
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 
-                0 0 20px rgba(255, 68, 68, 0.8),
-                0 0 40px rgba(255, 68, 68, 0.6),
-                0 0 60px rgba(255, 68, 68, 0.4),
-                0 6px 20px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(135deg, #ff5555 0%, #ff3333 100%);
-        }
-
-        .gallery-section {
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 1rem;
-        }
-
-        .gallery-title {
+        .gallery-header {
             text-align: center;
-            font-size: 2.5rem;
-            font-weight: 300;
-            color: #ff4444;
-            margin-bottom: 2rem;
-            letter-spacing: 2px;
-            text-shadow: 
-                0 0 10px rgba(255, 68, 68, 0.5),
-                0 0 20px rgba(255, 68, 68, 0.3);
+            margin-bottom: 60px;
+        }
+
+        .gallery-header .section-title {
+            color: var(--white);
         }
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
         }
 
         .gallery-item {
-            position: relative;
-            border-radius: 15px;
+            aspect-ratio: 1;
             overflow: hidden;
-            box-shadow: 
-                0 0 20px rgba(255, 68, 68, 0.3),
-                0 0 40px rgba(255, 68, 68, 0.2),
-                0 8px 25px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
         }
 
-        .gallery-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 
-                0 0 25px rgba(255, 68, 68, 0.5),
-                0 0 50px rgba(255, 68, 68, 0.3),
-                0 12px 35px rgba(0, 0, 0, 0.5);
+        .gallery-item:nth-child(1) {
+            grid-column: span 2;
+            grid-row: span 2;
         }
 
         .gallery-item img {
             width: 100%;
-            height: 300px;
+            height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.6s ease;
         }
 
         .gallery-item:hover img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
-        .info-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
+        .gallery-item-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(230, 53, 39, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-item-overlay {
+            opacity: 1;
+        }
+
+        .gallery-item-overlay span {
+            color: var(--white);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        /* Location */
+        .location {
+            padding: 120px 0;
+            background: var(--cream);
+        }
+
+        .location-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
         }
 
-        .info-card {
-            background: #1a1a1a;
-            padding: 2rem;
-            border-radius: 10px;
-            border: 1px solid #2a2a2a;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        .location-info {
+            background: var(--black);
+            padding: 60px;
+            color: var(--white);
         }
 
-        .info-card h2 {
-            color: #ff4444;
-            margin-bottom: 1rem;
-            font-size: 1.6rem;
-            font-weight: 300;
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(255, 68, 68, 0.3);
-            padding-bottom: 0.5rem;
-            text-shadow: 
-                0 0 10px rgba(255, 68, 68, 0.5),
-                0 0 20px rgba(255, 68, 68, 0.3);
+        .location-info .section-title {
+            color: var(--white);
+            margin-bottom: 40px;
         }
 
-        .info-card p, .info-card a {
-            color: #b0b0b0;
-            margin: 0.5rem 0;
+        .contact-block {
+            margin-bottom: 40px;
+        }
+
+        .contact-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--red);
+            margin-bottom: 15px;
+        }
+
+        .contact-text {
             font-size: 1.1rem;
-            font-weight: 300;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.8);
         }
 
-        .info-card a {
-            color: #ff6666;
+        .contact-text a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-text a:hover {
+            color: var(--red);
+        }
+
+        .phone-large {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+
+        .phone-large a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .phone-large a:hover {
+            color: var(--red);
+        }
+
+        .hours-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .hours-row:last-child {
+            border-bottom: none;
+        }
+
+        .hours-day {
+            font-weight: 500;
+        }
+
+        .hours-time {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .location-map {
+            background: #e5e3df;
+            min-height: 500px;
+        }
+
+        .location-map iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+            border: none;
+            filter: grayscale(100%);
+            transition: filter 0.3s ease;
+        }
+
+        .location-map:hover iframe {
+            filter: grayscale(0%);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--red);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .cta-text {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-white {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .btn-white:hover {
+            background: var(--cream);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 80px 0 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 20px;
+        }
+
+        .footer-tagline {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        .footer-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--red);
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copyright {
+            color: rgba(255,255,255,0.4);
+            font-size: 0.85rem;
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-socials a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
             text-decoration: none;
             transition: all 0.3s ease;
         }
 
-        .info-card a:hover {
-            color: #ff4444;
-            text-shadow: 
-                0 0 5px rgba(255, 68, 68, 0.6),
-                0 0 10px rgba(255, 68, 68, 0.4);
+        .footer-socials a:hover {
+            background: var(--red);
         }
 
-        .phone {
-            font-size: 1.5rem;
-            font-weight: 300;
-            color: #ff4444;
-            letter-spacing: 1px;
-            text-shadow: 
-                0 0 8px rgba(255, 68, 68, 0.5),
-                0 0 15px rgba(255, 68, 68, 0.3);
-        }
-
-        .hours-list {
-            list-style: none;
-        }
-
-        .hours-list li {
-            padding: 0.4rem 0;
-            border-bottom: 1px solid #252525;
-            font-weight: 300;
-        }
-
-        .hours-list li:last-child {
-            border-bottom: none;
-        }
-
-        .day {
-            color: #ff4444;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-            text-shadow: 
-                0 0 5px rgba(255, 68, 68, 0.4),
-                0 0 10px rgba(255, 68, 68, 0.2);
-        }
-
-        .map-container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .map-container iframe {
-            width: 100%;
-            height: 450px;
-            border: 2px solid rgba(255, 68, 68, 0.5);
-            border-radius: 10px;
-            box-shadow: 
-                0 0 15px rgba(255, 68, 68, 0.3),
-                0 0 30px rgba(255, 68, 68, 0.2),
-                0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        footer {
-            background: #0f0f0f;
-            text-align: center;
-            padding: 2rem 1rem;
-            margin-top: 3rem;
-            border-top: 1px solid #2a2a2a;
-            color: #666;
-            font-weight: 300;
-            letter-spacing: 0.5px;
-        }
-
-        .center-text {
-            text-align: center;
-        }
-
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 2rem;
-            }
-
-            .tagline {
-                font-size: 1rem;
-            }
-
-            .cta-button {
-                font-size: 1.2rem;
-                padding: 1rem 2rem;
-            }
-
-            .info-section {
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
                 grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text {
+                order: 2;
+            }
+
+            .hero-image {
+                order: 1;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .about-content {
+                padding-left: 0;
             }
 
             .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .location-grid {
                 grid-template-columns: 1fr;
             }
 
-            .gallery-title {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: flex;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: var(--black);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.3s ease;
+            }
+
+            nav.active {
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+
+            nav a {
+                font-size: 1.5rem;
+            }
+
+            .hero {
+                padding-top: 100px;
+            }
+
+            .hero-stats {
+                gap: 25px;
+            }
+
+            .stat-number {
                 font-size: 2rem;
             }
+
+            .about-features {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .gallery-item:nth-child(1) {
+                grid-column: span 2;
+                grid-row: span 1;
+            }
+
+            .location-info {
+                padding: 40px 20px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="logo">ARIANA'S PIZZA</div>
-        <div class="tagline">Astoria's best, ready for you</div>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="#" class="logo">
+                    <div class="logo-icon">AP</div>
+                    <span class="logo-text">Arianna's Pizza</span>
+                </a>
+                <div class="mobile-toggle" onclick="toggleNav()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <nav id="nav">
+                    <ul>
+                        <li><a href="#about">Our Story</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#location">Location</a></li>
+                        <li><a href="tel:3475070310">Call Us</a></li>
+                        <li><a href="https://arianaspizza.avcoindustries.com/order-now" class="nav-cta">Order Now</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </header>
 
-    <div class="hero center-text">
-        <a href="https://arianaspizza.avcoindustries.com/order-now" class="cta-button">ORDER NOW</a>
-    </div>
-
-    <div class="gallery-section">
-        <h2 class="gallery-title">OUR DELICIOUS PIZZA</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="https://d1w7312wesee68.cloudfront.net/XzdB7whZNtJ96JIDkpfd_0HJugcvexDhnR9cA0jtXDE/ext:webp/quality:85/c:2048:1365:ce:0:0/plain/s3://toast-sites-resources-prod/restaurantImages/88907444-2258-489c-b516-8f63b4cccfdb/ariqanaspizzav2.jpg" alt="Ariana's Pizza Interior">
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-bg-pattern"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="hero-badge">Now Open in Astoria</div>
+                        <h1 class="hero-title">
+                            <span>Pizza Worth</span>
+                            <span class="outline">Coming Back</span>
+                            <span>For Every Time</span>
+                        </h1>
+                        <p class="hero-subtitle">Fresh dough, bold flavors, and a whole lot of love — right in the heart of Astoria, Queens. Order for delivery or stop in late.</p>
+                        <div class="hero-buttons">
+                            <a href="https://arianaspizza.avcoindustries.com/order-now" class="btn btn-primary">
+                                Order Online
+                                <span>→</span>
+                            </a>
+                            <a href="#about" class="btn btn-outline">Our Story</a>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="stat">
+                                <div class="stat-number">1AM</div>
+                                <div class="stat-label">Open Late Fri & Sat</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">7</div>
+                                <div class="stat-label">Days a Week</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">🍕</div>
+                                <div class="stat-label">Made Fresh Daily</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <div class="hero-image-wrapper">
+                            <img src="https://d1w7312wesee68.cloudfront.net/qI8GOyjh981gzvyo90ka-ZzkPVjt8pO1wgJunaDcpIA/ext:webp/quality:85/c:1823:1365:ce:76:0/plain/s3://toast-sites-resources-prod/restaurantImages/88907444-2258-489c-b516-8f63b4cccfdb/PIZZA2.jpg" alt="Fresh pizza from Arianna's Pizza">
+                        </div>
+                        <div class="hero-image-frame"></div>
+                    </div>
+                </div>
             </div>
-            <div class="gallery-item">
-                <img src="https://d1w7312wesee68.cloudfront.net/qI8GOyjh981gzvyo90ka-ZzkPVjt8pO1wgJunaDcpIA/ext:webp/quality:85/c:1823:1365:ce:76:0/plain/s3://toast-sites-resources-prod/restaurantImages/88907444-2258-489c-b516-8f63b4cccfdb/PIZZA2.jpg" alt="Fresh Pizza">
+        </section>
+
+        <!-- Marquee -->
+        <section class="marquee-section">
+            <div class="marquee-track">
+                <div class="marquee-content">
+                    <span class="marquee-item">Fresh Dough Daily</span>
+                    <span class="marquee-item">Astoria's Favorite</span>
+                    <span class="marquee-item">Authentic Italian</span>
+                    <span class="marquee-item">Delivery Available</span>
+                    <span class="marquee-item">Open Late</span>
+                    <span class="marquee-item">Queens NYC Pizza</span>
+                </div>
+                <div class="marquee-content">
+                    <span class="marquee-item">Fresh Dough Daily</span>
+                    <span class="marquee-item">Astoria's Favorite</span>
+                    <span class="marquee-item">Authentic Italian</span>
+                    <span class="marquee-item">Delivery Available</span>
+                    <span class="marquee-item">Open Late</span>
+                    <span class="marquee-item">Queens NYC Pizza</span>
+                </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <div class="info-section">
-        <div class="info-card">
-            <h2>📍 Location</h2>
-            <p>10-01 36th Avenue<br>Astoria, NY 11106</p>
-            <a href="https://maps.google.com/?q=10-01+36th+Avenue+Astoria+NY+11106" target="_blank">Get Directions →</a>
-        </div>
+        <!-- About -->
+        <section class="about" id="about">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-image slide-in-left">
+                        <div class="about-image-main">
+                            <img src="https://s3-media0.fl.yelpcdn.com/bphoto/6sfN68y_zOmYAxX2oEKkbg/348s.jpg" alt="Our kitchen at Arianna's Pizza">
+                        </div>
+                        <div class="about-image-accent">
+                            <span class="year">Astoria</span>
+                            <span class="text">Queens, NY</span>
+                        </div>
+                    </div>
+                    <div class="about-content slide-in-right">
+                        <span class="section-label">Our Story</span>
+                        <h2 class="section-title">Welcome to<br>Arianna's Pizza</h2>
+                        <p class="about-text">
+                            Arianna's Pizza is <strong>Astoria's go-to spot</strong> for real, delicious pizza made the right way. We're right here in the neighborhood at 36th Ave — the kind of place where the slices are big, the sauce is bold, and the dough is always fresh.
+                        </p>
+                        <p class="about-text">
+                            We believe pizza should be something you look forward to. That's why we put care into every pie — quality ingredients, <strong>made-from-scratch dough</strong>, and flavors that keep you coming back. Whether it's a quick lunch, a late-night slice, or a full order for the family, we've got you covered.
+                        </p>
+                        <p class="about-text">
+                            We're open seven days a week, late into the night on weekends, because we know Astoria doesn't stop — and <strong>neither do we</strong>. Delivery, pickup, or dine in: however you want it, we're ready.
+                        </p>
+                        <div class="about-features">
+                            <div class="feature">
+                                <div class="feature-icon">🍕</div>
+                                <h4 class="feature-title">Fresh Pies</h4>
+                                <p class="feature-text">Made from scratch</p>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">🚗</div>
+                                <h4 class="feature-title">Delivery</h4>
+                                <p class="feature-text">Fast & fresh</p>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">🌙</div>
+                                <h4 class="feature-title">Open Late</h4>
+                                <p class="feature-text">Until 1 AM weekends</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="info-card">
-            <h2>📞 Contact</h2>
-            <p class="phone"><a href="tel:+3475070310">(347) 507-0310</a></p>
-        </div>
+        <!-- Gallery -->
+        <section class="gallery" id="gallery">
+            <div class="container">
+                <div class="gallery-header fade-in">
+                    <span class="section-label" style="color: var(--red);">Our Food</span>
+                    <h2 class="section-title">From Our Kitchen</h2>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="https://d1w7312wesee68.cloudfront.net/qI8GOyjh981gzvyo90ka-ZzkPVjt8pO1wgJunaDcpIA/ext:webp/quality:85/c:1823:1365:ce:76:0/plain/s3://toast-sites-resources-prod/restaurantImages/88907444-2258-489c-b516-8f63b4cccfdb/PIZZA2.jpg" alt="Fresh pizza">
+                        <div class="gallery-item-overlay"><span>View</span></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://s3-media0.fl.yelpcdn.com/bphoto/6sfN68y_zOmYAxX2oEKkbg/348s.jpg" alt="Italian pasta">
+                        <div class="gallery-item-overlay"><span>View</span></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://slice-menu-assets-prod.imgix.net/113215/1764547550_e5ceb3693f" alt="Classic pizza">
+                        <div class="gallery-item-overlay"><span>View</span></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://s3-media0.fl.yelpcdn.com/bphoto/6sfN68y_zOmYAxX2oEKkbg/348s.jpg" alt="Appetizers">
+                        <div class="gallery-item-overlay"><span>View</span></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://slice-menu-assets-prod.imgix.net/113215/1764547550_e5ceb3693f" alt="Restaurant">
+                        <div class="gallery-item-overlay"><span>View</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="info-card">
-            <h2>🕐 Hours</h2>
-            <ul class="hours-list">
-                <li><span class="day">Sunday:</span> 11:00 AM - 11:00 PM</li>
-                <li><span class="day">Monday:</span> 11:00 AM - 11:00 PM</li>
-                <li><span class="day">Tuesday:</span> 11:00 AM - 11:00 PM</li>
-                <li><span class="day">Wednesday:</span> 11:00 AM - 11:00 PM</li>
-                <li><span class="day">Thursday:</span> 11:00 AM - 11:00 PM</li>
-                <li><span class="day">Friday:</span> 11:00 AM - 11:00 PM</li>
-                <li><span class="day">Saturday:</span> 11:00 AM - 11:00 PM</li>
-            </ul>
-        </div>
-    </div>
+        <!-- Location -->
+        <section class="location" id="location">
+            <div class="container">
+                <div class="location-grid">
+                    <div class="location-info">
+                        <span class="section-label">Find Us</span>
+                        <h2 class="section-title">Location & Hours</h2>
+                        
+                        <div class="contact-block">
+                            <div class="contact-label">Address</div>
+                            <div class="contact-text">
+                                Arianna's Pizza<br>
+                                10-01 36th Ave<br>
+                                Astoria, NY 11106
+                            </div>
+                        </div>
 
-    <div class="map-container">
-        <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1234567890123!2d-73.92345!3d40.76123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s10-01%2036th%20Avenue%2C%20Astoria%2C%20NY%2011106!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus&q=10-01+36th+Avenue,+Astoria,+NY+11106"
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-    </div>
+                        <div class="contact-block">
+                            <div class="contact-label">Phone</div>
+                            <div class="phone-large">
+                                <a href="tel:3475070310">(347) 507-0310</a>
+                            </div>
+                        </div>
 
+                        <div class="contact-block">
+                            <div class="contact-label">Hours</div>
+                            <div class="hours-grid">
+                                <div class="hours-row">
+                                    <span class="hours-day">Monday</span>
+                                    <span class="hours-time">10:00 AM – 11:00 PM</span>
+                                </div>
+                                <div class="hours-row">
+                                    <span class="hours-day">Tuesday</span>
+                                    <span class="hours-time">10:00 AM – 11:00 PM</span>
+                                </div>
+                                <div class="hours-row">
+                                    <span class="hours-day">Wednesday</span>
+                                    <span class="hours-time">10:00 AM – 11:00 PM</span>
+                                </div>
+                                <div class="hours-row">
+                                    <span class="hours-day">Thursday</span>
+                                    <span class="hours-time">11:00 AM – 1:00 AM</span>
+                                </div>
+                                <div class="hours-row">
+                                    <span class="hours-day">Friday</span>
+                                    <span class="hours-time">10:00 AM – 1:00 AM</span>
+                                </div>
+                                <div class="hours-row">
+                                    <span class="hours-day">Saturday</span>
+                                    <span class="hours-time">10:00 AM – 1:00 AM</span>
+                                </div>
+                                <div class="hours-row">
+                                    <span class="hours-day">Sunday</span>
+                                    <span class="hours-time">10:00 AM – 11:00 PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="location-map">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.8!2d-73.9317!3d40.7574!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25f0e0b0b0b0b%3A0xabcdef123456!2s10-01%2036th%20Ave%2C%20Astoria%2C%20NY%2011106!5e0!3m2!1sen!2sus!4v1702857600000"
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <div class="container">
+                <h2 class="cta-title">Ready to Order?</h2>
+                <p class="cta-text">Get fresh Astoria pizza delivered right to your door, or call ahead for pickup.</p>
+                <a href="https://arianaspizza.avcoindustries.com/order-now" class="btn btn-white">
+                    Order Now
+                    <span>→</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Ariana's Pizza. All rights reserved.</p>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <div class="logo-icon">AP</div>
+                        <span class="logo-text">Arianna's Pizza</span>
+                    </a>
+                    <p class="footer-tagline">
+                        Fresh dough, bold flavors, and a whole lot of heart — serving Astoria, Queens every day of the week.
+                        <br><br>
+                        <em>"Pizza Worth Coming Back For"</em>
+                    </p>
+                </div>
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#about">Our Story</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#location">Location</a></li>
+                        <li><a href="https://arianaspizza.avcoindustries.com/order-now">Order Online</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="tel:3475070310">(347) 507-0310</a></li>
+                        <li><a href="#location">10-01 36th Ave</a></li>
+                        <li><a href="#location">Astoria, NY 11106</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Hours</h4>
+                    <ul class="footer-links">
+                        <li>Mon–Wed: 10:00–11:00</li>
+                        <li>Thu: 11:00 AM–1:00 AM</li>
+                        <li>Fri–Sat: 10:00 AM–1:00 AM</li>
+                        <li>Sun: 10:00 AM–11:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2025 Arianna's Pizza. All Rights Reserved.</p>
+                <div class="footer-socials">
+                    <a href="#" aria-label="Facebook">f</a>
+                    <a href="#" aria-label="Instagram">ig</a>
+                    <a href="#" aria-label="Yelp">y</a>
+                </div>
+            </div>
+        </div>
     </footer>
+
+    <script>
+        // Mobile nav toggle
+        function toggleNav() {
+            document.getElementById('nav').classList.toggle('active');
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('nav').classList.remove('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
